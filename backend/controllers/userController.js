@@ -1,11 +1,12 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/uderModel');
 const jwt = require('jsonwebtoken');
+const { errorHandler } = require('../middleware/errorMiddleware');
 
 // @desc   Register a new user
 // @route  /api/users
 // @access Public
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
     const {name, email, password} = req.body;
 
     if(!name || !email || !password){
@@ -19,7 +20,7 @@ const registerUser = async (req, res) => {
         const existingUser = await User.findOne({email});
         if(existingUser){
             res.status(400)
-            throw new Error('Invalid user');
+            throw new Error('Invalid user data');
         }
     
         // Hash password
@@ -44,9 +45,8 @@ const registerUser = async (req, res) => {
             res.status(400);
             throw new Error('Invalid user data')
         }
-    }catch(error){
-       res.send(error.message);
-       console.log(error);
+    }catch(err){
+        next(err);
     }
 }
 
@@ -54,7 +54,7 @@ const registerUser = async (req, res) => {
 // @desc   Register a new user
 // @route  /api/users/login
 // @access Public
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({email});
 
@@ -71,9 +71,8 @@ const loginUser = async (req, res) => {
             res.status(401);
             throw new Error('Invalid credentials')
         }
-    }catch(error){
-        res.send(error.message);
-        console.log(error)
+    }catch(err){
+        next(err);
     }
 
 }
