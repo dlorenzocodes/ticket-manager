@@ -30,8 +30,7 @@ const protectPrivateRoute = async (req, res, next) => {
             throw new Error('Not authorized');
         }
     }catch(err){
-        res.send(err.message)
-        console.log(err)
+        next(err);
     }
 
 }
