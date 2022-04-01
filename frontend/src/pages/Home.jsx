@@ -17,7 +17,7 @@ function Home() {
       </Link>
 
       <Link 
-        to='/new-ticket' 
+        to='/tickets' 
         className='btn btn-block'>
           <FaTicketAlt /> View My Tickets
       </Link>
