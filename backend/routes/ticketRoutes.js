@@ -10,6 +10,9 @@ const {
 } = require('../controllers/ticketController');
 const { protectPrivateRoute } = require('../middleware/authMiddleware');
 
+// Route Nesting
+router.use('/:ticketId/notes', require('./noteRoutes'));
+
 router.route('/')
     .get(protectPrivateRoute, getTickets)
     .post(protectPrivateRoute, createTicket);
