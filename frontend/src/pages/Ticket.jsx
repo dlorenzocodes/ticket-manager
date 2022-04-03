@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTicket, closeTicket } from '../features/tickets/tickets'
-import { getNotes } from '../features/notes/notes'
+import { getNotes, createNote } from '../features/notes/notes'
 import { FaPlus } from 'react-icons/fa'
 
 
@@ -60,7 +60,7 @@ function Ticket() {
 
   const onNoteSubmit = (e) => {
     e.preventDefault()
-    console.log('submit')
+    dispatch(createNote({ noteText, ticketId: params.id}))
     closeModal()
   }
 
@@ -86,7 +86,7 @@ function Ticket() {
         <h3>
           Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
         </h3>
-        <h3>Ptoduct: {ticket.product} </h3>
+        <h3>Product: {ticket.product} </h3>
         <hr />
         <div className="ticket-desc">
           <h3>Description of Issue:</h3>
